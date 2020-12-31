@@ -12,45 +12,46 @@ function CountryStatics({route,navigation}){
     const [Deaths,setDeaths]=useState();
     const [CriticalCase,setCriticalCase]=useState();
     const [LastUpdate,setLstUpdaate]=useState();
-    const CasesPercentage=((TotalCase/population)*100).toFixed(1);
+    const CasesPercentage=((TotalCase/population)*100).toFixed(2);
     const RecoveredPercentage=((Recovered/TotalCase)*100).toFixed(1);
     const CriticalPercentage=((CriticalCase/TotalCase)*100).toFixed(1);
     const DeathsPercentage=((Deaths/TotalCase)*100).toFixed(1);
   
   
     useEffect(()=>{
-      fetch("https://world-population.p.rapidapi.com/worldpopulation", {
+      fetch("https://world-population.p.rapidapi.com/population?country_name=" + name.item, {
         "method": "GET",
         "headers": {
-          "x-rapidapi-key": "a0d912f87emsha0f3949be136804p12a4b2jsn22b01b22b247",
-          "x-rapidapi-host": "world-population.p.rapidapi.com"
+            "x-rapidapi-key": "a0d912f87emsha0f3949be136804p12a4b2jsn22b01b22b247",
+            "x-rapidapi-host": "world-population.p.rapidapi.com",
         }
       })
       .then((response) => response.json())
-      .then((rj)=>{
+      .then((json)=>{
         setLoading(false);
-        setPopulation(rj.body.world_population);
+        setPopulation(json.body.population);
         })
         .catch((error)=>{console.log(error)});
     },[]);
   
     useEffect(()=>{
-      fetch("https://covid-19-data.p.rapidapi.com/totals", {
+        console.log(name)
+      fetch("https://covid-19-data.p.rapidapi.com/country?name=" +name.item , {
         "method": "GET",
         "headers": {
-          "x-rapidapi-key": "a0d912f87emsha0f3949be136804p12a4b2jsn22b01b22b247",
-            "x-rapidapi-host": "covid-19-data.p.rapidapi.com",
+            "x-rapidapi-key": "a0d912f87emsha0f3949be136804p12a4b2jsn22b01b22b247",
+	        "x-rapidapi-host": "covid-19-data.p.rapidapi.com",
         }
       })
       .then((response) => response.json())
-      .then((rj)=>{
-        setTotalCase(rj[0].confirmed);
-        setRecovered(rj[0].recovered);
-        setCriticalCase(rj[0].critical);
-        setDeaths(rj[0].deaths);
-        setLstUpdaate(rj[0].lastUpdate);
+      .then((json)=>{
+        setTotalCase(json[0].confirmed);
+        setRecovered(json[0].recovered);
+        setCriticalCase(json[0].critical);
+        setDeaths(json[0].deaths);
+        setLstUpdaate(json[0].lastUpdate);
         })
-        .catch((error)=>{console.log(error)});
+        .catch((error)=>{console.log("erorrrr")});
     }),[];
   
   

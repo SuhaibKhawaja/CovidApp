@@ -8,7 +8,7 @@ function App(){
   const Drawer = createDrawerNavigator();
   return(
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Country Statistics">
+      <Drawer.Navigator initialRouteName="World Statistics Screen">
         <Drawer.Screen name="World Statistics Screen" component={Home} />
         <Drawer.Screen name="Country Statistics Screen" component={CountryList} />
         <Drawer.Screen name="Country Statistics" component={CountryStatics} />
